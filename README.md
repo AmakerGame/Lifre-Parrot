@@ -1,6 +1,5 @@
 # Ліфре
 
-[![Збірка](https://github.com/mrEdytor/Lifre/actions/workflows/build.yml/badge.svg)](https://github.com/mrEdytor/Lifre/actions/workflows/build.yml)
 [![Останній реліз](https://img.shields.io/github/v/release/mrEdytor/Lifre)](https://github.com/mrEdytor/Lifre/releases/latest)
 [![Ліцензія: MIT](https://img.shields.io/badge/Ліцензія-MIT-yellow.svg)](LICENSE)
 
@@ -20,10 +19,9 @@
    - Для старих 32-бітних систем — папка `x86`.
    - Якщо не знаєте — беріть `x64`.
 2. **Двічі клікніть** `StartLifre.exe` — Ліфре з'явиться на екрані.
-3. **Зупинити** — запустіть `StopLifre.exe` (або пункт «Вихід» у меню папуги/трею).
 
 Жодних встановлень .NET, Visual C++ Redistributable, Java, Python чи
-інших програм **не потрібно** — обидва `.exe` повністю автономні.
+інших програм **не потрібно** — `.exe` повністю автономний.
 
 ### Керування
 
