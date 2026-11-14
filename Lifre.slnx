@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Lifre.Behavior/Lifre.Behavior.csproj" />
+    <Project Path="src/Lifre.Core/Lifre.Core.csproj" />
+    <Project Path="src/Lifre.Interop/Lifre.Interop.csproj" />
+    <Project Path="src/Lifre.Persistence/Lifre.Persistence.csproj" />
+    <Project Path="src/Lifre.Rendering/Lifre.Rendering.csproj" />
+    <Project Path="src/Lifre.Start/Lifre.Start.csproj" />
+    <Project Path="src/Lifre.Stop/Lifre.Stop.csproj" />
+    <Project Path="src/Lifre.UI/Lifre.UI.csproj" />
+  </Folder>
+</Solution>

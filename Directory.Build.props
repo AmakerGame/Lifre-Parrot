@@ -1,0 +1,17 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>mrEdytor</Authors>
+    <Company>Lifre</Company>
+    <Product>Lifre</Product>
+    <Copyright>Copyright (c) 2026 mrEdytor та контриб'ютори Ліфре</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="System.IO" />
+  </ItemGroup>
+</Project>

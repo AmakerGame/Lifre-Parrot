@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lifre.Core\Lifre.Core.csproj" />
+    <ProjectReference Include="..\Lifre.Persistence\Lifre.Persistence.csproj" />
+    <ProjectReference Include="..\Lifre.Interop\Lifre.Interop.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+</Project>
