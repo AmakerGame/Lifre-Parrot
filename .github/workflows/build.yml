@@ -1,17 +1,63 @@
 name: Build exe
+
 on:
   push:
+    tags:
+      - 'v*'
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { rid: win-x64, project: src/Lifre.Start/Lifre.Start.csproj, exe: StartLifre }
+          - { rid: win-x86, project: src/Lifre.Start/Lifre.Start.csproj, exe: StartLifre }
+          - { rid: win-x64, project: src/Lifre.Stop/Lifre.Stop.csproj,  exe: StopLifre }
+          - { rid: win-x86, project: src/Lifre.Stop/Lifre.Stop.csproj,  exe: StopLifre }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      - run: dotnet publish src/Lifre.Start/Lifre.Start.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o dist
+      - name: Publish ${{ matrix.exe }} (${{ matrix.rid }})
+        run: >
+          dotnet publish ${{ matrix.project }} -c Release -r ${{ matrix.rid }}
+          --self-contained true -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true -p:PublishReadyToRun=true
+          -p:DebugType=None -p:DebugSymbols=false
+          -o dist
       - uses: actions/upload-artifact@v4
         with:
-          name: StartLifre-exe
-          path: dist/StartLifre.exe
+          name: ${{ matrix.exe }}-${{ matrix.rid }}
+          path: dist/*.exe
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: '*-win-*'
+          merge-multiple: false
+      - name: Підготувати файли релізу
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path release/x64, release/x86 | Out-Null
+          Copy-Item artifacts/StartLifre-win-x64/StartLifre.exe release/x64/
+          Copy-Item artifacts/StopLifre-win-x64/StopLifre.exe   release/x64/
+          Copy-Item artifacts/StartLifre-win-x86/StartLifre.exe release/x86/
+          Copy-Item artifacts/StopLifre-win-x86/StopLifre.exe   release/x86/
+          Compress-Archive -Path release/x64/* -DestinationPath Lifre-x64.zip
+          Compress-Archive -Path release/x86/* -DestinationPath Lifre-x86.zip
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Lifre-x64.zip
+            Lifre-x86.zip

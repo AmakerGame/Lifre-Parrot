@@ -9,21 +9,36 @@
 
 Ліфре — це папуга, який живе на вашому робочому столі. Він ходить,
 стрибає, летить, їсть, спить, танцює, чепурить пір'я і пригортається
-до вас — і все це з **одного самодостатнього `.exe`**, без жодного
-встановлення.
+до вас — і все це з **самодостатніх `.exe`**, без жодного встановлення.
 
 ## Швидкий старт для користувача
 
-1. **Завантажте** `StartLifre.exe` зі
+1. **Завантажте** архів зі
    [сторінки Releases](https://github.com/mrEdytor/Lifre/releases/latest)
-   (або зберіть самостійно — див. «Для розробників»).
+   (`Lifre-x64.zip` або `Lifre-x86.zip` — див. вибір нижче)
+   або зберіть самостійно — див. «Для розробників».
 2. **Двічі клікніть** `StartLifre.exe` — Ліфре з'явиться на екрані.
-3. **Зупинити** — пункт «Вихід» у меню папуги чи в треї, або запустіть
-   `StopLifre.exe`.
+3. **Зупинити** — пункт «Вихід» у контекстному меню папуги
+   (правий клік) або в меню іконки трею. Альтернатива — запустіть
+   `StopLifre.exe` поруч.
 
 Жодних встановлень .NET, Visual C++ Redistributable, Java, Python чи
-інших програм **не потрібно** — `StartLifre.exe` повністю автономний:
-.NET runtime і всі тексти вбудовані всередину файлу.
+інших програм **не потрібно** — обидва `.exe` повністю автономні:
+.NET runtime і всі тексти вбудовані всередину файлів.
+
+### Який архів обрати: x64 чи x86?
+
+- **x64** — для 64-бітної Windows (майже всі сучасні ПК).
+- **x86** — для старих 32-бітних систем.
+- **Не знаєте?** Беріть `x64` — він працює на будь-якій сучасній
+  Windows 10/11.
+
+У кожному архіві два файли:
+
+| Файл | Призначення |
+|------|-------------|
+| `StartLifre.exe` | Запускає папугу на робочому столі |
+| `StopLifre.exe` | Коректно зупиняє Ліфре (якщо запущений) |
 
 ### Керування
 
@@ -65,8 +80,9 @@
   `feed`, `play`, `sleep`, `fly`, `gift`. `StopLifre.exe` надсилає
   `stop` і, якщо процес не завершився, примусово зупиняє його.
 - **Автономність**: `SelfContained` + `PublishSingleFile` +
-  `EnableCompressionInSingleFile` — один `.exe` (~70 МБ), без
-  супутніх `.dll`, без .NET на машині користувача.
+  `EnableCompressionInSingleFile` + `PublishReadyToRun` — один
+  `.exe` на архітектуру, без супутніх `.dll`, без .NET на машині
+  користувача.
 - **Тексти вбудовані**: `phrases.txt` і `menu.txt` лежать у
   `src/Lifre.Persistence/Texts/` і компілюються в exe як ресурси.
   Папка `Documents\DataIMGLifre` **не створюється** — застосунок
@@ -83,8 +99,11 @@
 
 ### Локальна збірка
 
-Потрібен .NET 8 SDK. Швидкий спосіб — `publish.bat` у корені
-(результат: `dist\StartLifre.exe`). Або вручну:
+Потрібен .NET 8 SDK. Швидкий спосіб — `publish.bat` у корені:
+він збирає всі 4 файли в `dist\x64\` і `dist\x86\`
+(`StartLifre.exe` + `StopLifre.exe` у кожній папці).
+
+Або вручну для кожної архітектури:
 
 ```bat
 dotnet publish src/Lifre.Start/Lifre.Start.csproj -c Release -r win-x64 ^
@@ -92,24 +111,32 @@ dotnet publish src/Lifre.Start/Lifre.Start.csproj -c Release -r win-x64 ^
   -p:IncludeNativeLibrariesForSelfExtract=true ^
   -p:EnableCompressionInSingleFile=true -p:PublishReadyToRun=true ^
   -p:DebugType=None -p:DebugSymbols=false ^
-  -o dist
+  -o out/x64/start
+
+dotnet publish src/Lifre.Stop/Lifre.Stop.csproj -c Release -r win-x64 ^
+  --self-contained true -p:PublishSingleFile=true ^
+  -p:IncludeNativeLibrariesForSelfExtract=true ^
+  -p:EnableCompressionInSingleFile=true -p:PublishReadyToRun=true ^
+  -p:DebugType=None -p:DebugSymbols=false ^
+  -o out/x64/stop
 ```
 
-Для `StopLifre.exe` — той самий publish для
-`src/Lifre.Stop/Lifre.Stop.csproj` (він менший і швидший).
-Для 32-бітних систем замініть `win-x64` на `win-x86`.
-
-> Зверніть увагу: у поточному CI зібрати `StopLifre.exe` і `win-x86`
-> можна лише локально — workflow поки що публікує один артефакт
-> `StartLifre.exe` для `win-x64`. Це свідоме спрощення «один файл —
-> одна кнопка»; розширення матриці збірки — задача для контриб'юторів.
+Аналогічно для `win-x86` → `out/x86\start` і `out/x86\stop`.
+Усі `.exe` — самодостатні, працюють на чистій Windows 10/11
+без .NET, Visual C++ Redistributable та інших залежностей.
 
 ### GitHub Actions
 
-Workflow `.github/workflows/build.yml` запускається на `push` і
-`workflow_dispatch`. Він публікує `StartLifre.exe` (win-x64,
-single-file, self-contained) і завантажує його як артефакт
-`StartLifre-exe` на сторінці Actions → Build exe → Artifacts.
+Workflow `.github/workflows/build.yml` запускається на `push`,
+PR, `workflow_dispatch` і тегах `v*`:
+
+- **Матриця** `win-x64` × `win-x86` × `StartLifre`/`StopLifre` —
+  чотири паралельні збірки, кожна завантажується як артефакт
+  (`StartLifre-win-x64`, `StopLifre-win-x86` тощо) на сторінці
+  Actions → Build exe → Artifacts.
+- **На тезі `v*`** створюється GitHub Release з двома архівами:
+  `Lifre-x64.zip` і `Lifre-x86.zip`, кожен містить
+  `StartLifre.exe` + `StopLifre.exe`.
 
 ### Архітектура
 
