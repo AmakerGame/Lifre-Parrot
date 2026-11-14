@@ -1,6 +1,5 @@
 # Ліфре
 
-[![Збірка](https://github.com/mrEdytor/Lifre/actions/workflows/build.yml/badge.svg)](https://github.com/mrEdytor/Lifre/actions/workflows/build.yml)
 [![Останній реліз](https://img.shields.io/github/v/release/mrEdytor/Lifre)](https://github.com/mrEdytor/Lifre/releases/latest)
 [![Ліцензія: MIT](https://img.shields.io/badge/Ліцензія-MIT-yellow.svg)](LICENSE)
 
