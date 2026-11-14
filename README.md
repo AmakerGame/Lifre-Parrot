@@ -1,9 +1,9 @@
 # Ліфре
 
-[![Останній реліз](https://img.shields.io/github/v/release/mrEdytor/Lifre)](https://github.com/mrEdytor/Lifre/releases/latest)
+[![Останній реліз](https://img.shields.io/github/v/release/AmakerGame/Lifre-Parrot)](https://github.com/AmakerGame/Lifre-Parrot/releases/latest)
 [![Ліцензія: MIT](https://img.shields.io/badge/Ліцензія-MIT-yellow.svg)](LICENSE)
 
-> ## [⬇ Завантажити останню версію](https://github.com/mrEdytor/Lifre/releases/latest)
+> ## [⬇ Завантажити останню версію](https://github.com/AmakerGame/Lifre-Parrot/releases/latest)
 
 **Вітаємо у проєкті Ліфре! 🦜**
 
@@ -14,7 +14,7 @@
 ## Швидкий старт для користувача
 
 1. **Завантажте** архів зі
-   [сторінки Releases](https://github.com/mrEdytor/Lifre/releases/latest)
+   [сторінки Releases](https://github.com/AmakerGame/Lifre-Parrot/releases/latest)
    (`Lifre-x64.zip` або `Lifre-x86.zip` — див. вибір нижче)
    або зберіть самостійно — див. «Для розробників».
 2. **Двічі клікніть** `StartLifre.exe` — Ліфре з'явиться на екрані.
@@ -157,5 +157,5 @@ src/
 ## Ліцензія
 
 Проєкт поширюється за ліцензією [MIT](LICENSE) —
-Copyright (c) 2026 mrEdytor та контриб'ютори Ліфре.
+Copyright (c) 2026 Edytor Studio (AmakerGame).
 Контрибуції вітаються: відкривайте Issue або надсилайте Pull Request!

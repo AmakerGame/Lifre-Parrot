@@ -5,10 +5,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Authors>mrEdytor</Authors>
+    <Authors>Edytor Studio (AmakerGame)</Authors>
     <Company>Lifre</Company>
     <Product>Lifre</Product>
-    <Copyright>Copyright (c) 2026 mrEdytor та контриб'ютори Ліфре</Copyright>
+    <Copyright>Copyright (c) 2026 Edytor Studio (AmakerGame)</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
